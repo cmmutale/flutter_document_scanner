@@ -29,6 +29,9 @@ class _CunningScannerState extends State<CunningScanner> {
   // Document object for pdf
   final pdfDocument = pw.Document();
 
+  // edit scanned documents
+  EditDocument editObject = EditDocument();
+
   @override
   void initState() {
     super.initState();
@@ -45,7 +48,8 @@ class _CunningScannerState extends State<CunningScanner> {
         actions: [
           IconButton(
             onPressed: () {
-              createPDF(_pictures, pdfDocument);
+              // createPDF(_pictures, pdfDocument);
+              editObject.createPDF(_pictures, pdfDocument);
             },
             icon: const Icon(Icons.save),
           )
@@ -59,6 +63,7 @@ class _CunningScannerState extends State<CunningScanner> {
     );
   }
 
+// Build list of images for editing
   ListView ImageList() {
     return ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -122,6 +127,7 @@ class _CunningScannerState extends State<CunningScanner> {
         });
   }
 
+// popup widget for rearranging pages
   Widget _buildPopupDialog(
       BuildContext context, int index, List<String> imageArray) {
     return AlertDialog(
@@ -151,6 +157,7 @@ class _CunningScannerState extends State<CunningScanner> {
     );
   }
 
+// start the cunning scanner
   void startScanning() async {
     List<String> pictures;
     try {
@@ -162,6 +169,7 @@ class _CunningScannerState extends State<CunningScanner> {
     } catch (e) {}
   }
 
+// swapping algorithme
   void _swapItems(List<String> array, int a, int b) {
     final temp = array[a];
     array[a] = array[b];
@@ -171,6 +179,7 @@ class _CunningScannerState extends State<CunningScanner> {
     });
   }
 
+// rotate images
   Future<void> _rotateItem() async {
     img.Image? image = img.decodeImage(await _editImge!.readAsBytes());
     img.Image rotatedImage = img.copyRotate(image!, angle: 90);

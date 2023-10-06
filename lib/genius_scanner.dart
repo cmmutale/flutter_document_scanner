@@ -36,7 +36,7 @@ class _GeniusScannerState extends State<GeniusScanner> {
         actions: [
           IconButton(
             onPressed: () {
-              saveDocuments(_data);
+              // saveDocuments(_data);
             },
             icon: Icon(Icons.save),
           )
@@ -53,95 +53,95 @@ class _GeniusScannerState extends State<GeniusScanner> {
     );
   }
 
-  ListView ImageList() {
-    return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: _pictures.length,
-        itemBuilder: (context, index) {
-          return Stack(
-            children: [
-              Container(
-                width: 400,
-                padding: const EdgeInsets.all(8.0),
-                child: FutureBuilder<void>(
-                  future: _rotateItem(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return Image.file(File(_pictures[index]),
-                          fit: BoxFit.cover);
-                    } else {
-                      return Image.file(File(_pictures[index]));
-                    }
-                  },
-                ),
-              ),
-              Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        _rotateItem();
-                        print('image rotated!!!');
-                      },
-                      icon: Icon(Icons.rotate_left)),
-                  IconButton(
-                      onPressed: () {
-                        _rotateItem();
-                        print('image rotated!!!');
-                      },
-                      icon: Icon(Icons.rotate_right)),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
-                  IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                _buildPopupDialog(context, index, _pictures));
-                      },
-                      icon: Icon(Icons.list)),
-                ],
-              ),
-              Positioned(
-                bottom: 30.0,
-                left: 25.0,
-                child: Text(
-                  '$index',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 24.0),
-                ),
-              )
-            ],
-          );
-        });
-  }
+  // ListView ImageList() {
+  //   return ListView.builder(
+  //       scrollDirection: Axis.horizontal,
+  //       itemCount: _pictures.length,
+  //       itemBuilder: (context, index) {
+  //         return Stack(
+  //           children: [
+  //             Container(
+  //               width: 400,
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: FutureBuilder<void>(
+  //                 future: _rotateItem(),
+  //                 builder: (context, snapshot) {
+  //                   if (snapshot.connectionState == ConnectionState.done) {
+  //                     return Image.file(File(_pictures[index]),
+  //                         fit: BoxFit.cover);
+  //                   } else {
+  //                     return Image.file(File(_pictures[index]));
+  //                   }
+  //                 },
+  //               ),
+  //             ),
+  //             Row(
+  //               children: [
+  //                 IconButton(
+  //                     onPressed: () {
+  //                       _rotateItem();
+  //                       print('image rotated!!!');
+  //                     },
+  //                     icon: Icon(Icons.rotate_left)),
+  //                 IconButton(
+  //                     onPressed: () {
+  //                       _rotateItem();
+  //                       print('image rotated!!!');
+  //                     },
+  //                     icon: Icon(Icons.rotate_right)),
+  //                 IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+  //                 IconButton(
+  //                     onPressed: () {
+  //                       showDialog(
+  //                           context: context,
+  //                           builder: (BuildContext context) =>
+  //                               _buildPopupDialog(context, index, _pictures));
+  //                     },
+  //                     icon: Icon(Icons.list)),
+  //               ],
+  //             ),
+  //             Positioned(
+  //               bottom: 30.0,
+  //               left: 25.0,
+  //               child: Text(
+  //                 '$index',
+  //                 style: const TextStyle(
+  //                     fontWeight: FontWeight.bold, fontSize: 24.0),
+  //               ),
+  //             )
+  //           ],
+  //         );
+  //       });
+  // }
 
-  Widget _buildPopupDialog(
-      BuildContext context, int index, List<String> imageArray) {
-    return AlertDialog(
-      title: const Text('Pick new page:'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          for (var i = 0; i < imageArray.length; i++)
-            TextButton(
-                onPressed: () {
-                  // print('button picked');
-                  _swapItems(imageArray, index, i);
-                  Navigator.of(context).pop();
-                },
-                child: Text("$i")),
-        ],
-      ),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text('Close'),
-        ),
-      ],
-    );
-  }
+  // Widget _buildPopupDialog(
+  //     BuildContext context, int index, List<String> imageArray) {
+  //   return AlertDialog(
+  //     title: const Text('Pick new page:'),
+  //     content: Column(
+  //       mainAxisSize: MainAxisSize.min,
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: <Widget>[
+  //         for (var i = 0; i < imageArray.length; i++)
+  //           TextButton(
+  //               onPressed: () {
+  //                 // print('button picked');
+  //                 _swapItems(imageArray, index, i);
+  //                 Navigator.of(context).pop();
+  //               },
+  //               child: Text("$i")),
+  //       ],
+  //     ),
+  //     actions: <Widget>[
+  //       TextButton(
+  //         onPressed: () {
+  //           Navigator.of(context).pop();
+  //         },
+  //         child: const Text('Close'),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   void runGenius() async {
     // genius scan config
@@ -159,7 +159,7 @@ class _GeniusScannerState extends State<GeniusScanner> {
 
       if (result['scans']) {
         // instantiate an object variable
-        var data = result['scans']['enhancedUrl'];
+        var data = result['scans'];
         _data = result['scans']['enhancedUrl'];
         var fileLink = result['multiPageDocumentUrl'];
         setState(() {
@@ -167,7 +167,7 @@ class _GeniusScannerState extends State<GeniusScanner> {
         });
         // print(fileLink.toString());
         // print('SUCCESS!!!!!!!!!!!!!' + data);
-        // saveDocuments(data);
+        saveDocuments(data);
       }
     } catch (e) {}
   }
@@ -180,27 +180,5 @@ class _GeniusScannerState extends State<GeniusScanner> {
     try {
       await FlutterGeniusScan.generateDocument(pages, config);
     } catch (e) {}
-  }
-
-  void _swapItems(List<String> array, int a, int b) {
-    final temp = array[a];
-    array[a] = array[b];
-    array[b] = temp;
-    setState(() {
-      _pictures = _pictures;
-    });
-  }
-
-  Future<void> _rotateItem() async {
-    // img.Image? image = img.decodeImage(await _editImge!.readAsBytes());
-    // img.Image rotatedImage = img.copyRotate(image!, angle: 90);
-
-    // Uint8List rotatedBytes = Uint8List.fromList(img.encodeJpg(rotatedImage));
-
-    // await _editImge?.writeAsBytes(rotatedBytes);
-
-    // setState(() {
-    //   _pictures = _pictures;
-    // });
   }
 }
