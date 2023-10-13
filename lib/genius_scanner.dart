@@ -74,7 +74,7 @@ class _GeniusScannerState extends State<GeniusScanner> {
         // setState(() {
         //   _pictures = data;
         // });
-        saveDocuments(data);
+        // saveDocuments(data);
       }
     } catch (e) {}
   }
