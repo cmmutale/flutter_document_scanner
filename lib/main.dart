@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'cunning_scanner.dart';
-import 'genius_scanner.dart';
+// import 'genius_scanner.dart';
+import 'scanner.dart';
 
 void main() {
   runApp(const MainApp());
@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: CunningScanner(),
+      home: Scanner(),
     );
   }
 }
